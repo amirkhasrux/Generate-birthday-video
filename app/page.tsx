@@ -26,6 +26,8 @@ import BirthdayVideo from "@/components/BirthdayVideo";
 import { generateBirthdayVideo } from "@/lib/videoGenerator";
 import { calculateAge, formatDate, parseDob } from "@/lib/birthday";
 
+import { AnimationTemplateId } from "@/lib/templates";
+
 // The four mutually-exclusive UI states
 type AppState = "form" | "generating" | "generated" | "error";
 
@@ -34,6 +36,7 @@ interface VideoData {
   extension: string;
   mimeType: string;
   name: string;
+  templateId: AnimationTemplateId;
 }
 
 // ─── Floating Particle Background (purely decorative) ─────────────────────────
@@ -92,7 +95,7 @@ export default function HomePage() {
    * handleGenerate — called by BirthdayForm when the user submits valid data.
    * Triggers video generation and transitions through app states.
    */
-  async function handleGenerate(name: string, dob: string) {
+  async function handleGenerate(name: string, dob: string, templateId: AnimationTemplateId) {
     // Clean up any existing video before starting a new one
     revokeCurrentUrl();
     setVideoData(null);
@@ -107,7 +110,7 @@ export default function HomePage() {
       const formattedDate = formatDate(dobDate);
 
       const result = await generateBirthdayVideo(
-        { name, formattedDate, age },
+        { name, formattedDate, age, templateId },
         (pct) => setProgress(pct)   // update progress bar in real time
       );
 
@@ -121,6 +124,7 @@ export default function HomePage() {
         extension: result.extension,
         mimeType: result.mimeType,
         name,
+        templateId,
       });
       setAppState("generated");
     } catch (err) {
@@ -183,6 +187,7 @@ export default function HomePage() {
               name={videoData.name}
               extension={videoData.extension}
               mimeType={videoData.mimeType}
+              templateId={videoData.templateId}
               onCreateAnother={handleCreateAnother}
             />
           )}

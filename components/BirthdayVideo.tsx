@@ -3,27 +3,21 @@
 /**
  * components/BirthdayVideo.tsx
  * -----------------------------
- * Displays the generated birthday video in an HTML <video> player.
- *
- * Object URL lifecycle:
- *   - Created by the parent with URL.createObjectURL(blob)
- *   - Passed in as `objectUrl` prop
- *   - Parent is responsible for revoking the URL when it's no longer needed
- *     (on "Create Another Video" or component unmount)
- *
- * We do NOT revoke the URL inside this component — the parent orchestrates that
- * so the DownloadButton can still use it after the video player mounts.
+ * Displays the generated birthday video in an HTML <video> player with
+ * template information, format details, and action buttons.
  */
 
 import { useEffect, useRef } from "react";
 import DownloadButton from "./DownloadButton";
+import { AnimationTemplateId, getTemplateById } from "@/lib/templates";
 
 interface BirthdayVideoProps {
   objectUrl: string;
   name: string;
   extension: string;
   mimeType: string;
-  onCreateAnother: () => void;   // Callback to reset everything
+  templateId?: AnimationTemplateId;
+  onCreateAnother: () => void;
 }
 
 export default function BirthdayVideo({
@@ -31,9 +25,11 @@ export default function BirthdayVideo({
   name,
   extension,
   mimeType,
+  templateId = "cosmic",
   onCreateAnother,
 }: BirthdayVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const template = getTemplateById(templateId);
 
   // Auto-play once the video is ready
   useEffect(() => {
@@ -49,6 +45,9 @@ export default function BirthdayVideo({
   return (
     <div className="video-result">
       <div className="video-result-header">
+        <div className="theme-badge-pill" style={{ borderColor: template.accentColor }}>
+          <span>{template.icon}</span> Theme: <strong>{template.name}</strong>
+        </div>
         <h2 className="result-title">
           🎉 {name}&apos;s Birthday Video is Ready!
         </h2>
@@ -74,7 +73,7 @@ export default function BirthdayVideo({
       </div>
 
       <p className="video-format-note">
-        📹 Format: {extension.toUpperCase()} · Duration: ~22 seconds · 1280×720
+        📹 Format: {extension.toUpperCase()} · 1280×720 HD · ~20 seconds
       </p>
 
       {/* Action buttons */}

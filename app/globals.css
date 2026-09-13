@@ -780,3 +780,197 @@ body {
   background: rgba(162, 155, 254, 0.3);
   color: #fff;
 }
+
+/* ─── Form Date of Birth Formatting & Additions ───────────── */
+.form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.format-hint-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--clr-purple);
+  background: rgba(162, 155, 254, 0.12);
+  border: 1px solid rgba(162, 155, 254, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dob-formatted-input {
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  padding-right: 48px !important;
+}
+
+.input-affix-icon {
+  position: absolute;
+  right: 14px;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+.input-help-text {
+  font-size: 0.8rem;
+  color: var(--clr-text-subtle);
+  margin-top: 2px;
+}
+
+/* ─── Template Selector ───────────────────────────────────── */
+.template-selector-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.template-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+  color: var(--clr-text-primary);
+  outline: none;
+}
+
+.template-card:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.template-card.selected {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.template-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.template-preview-bar {
+  height: 6px;
+  width: 100%;
+}
+
+.template-card-content {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.template-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.template-icon {
+  font-size: 1.4rem;
+}
+
+.template-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+}
+
+.template-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.template-tagline {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--clr-purple);
+  margin: 0;
+}
+
+.template-desc {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.template-palette-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+.palette-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: inline-block;
+}
+
+.template-check {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Result View Theme Badge Pill ────────────────────────── */
+.theme-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid;
+  border-radius: var(--radius-full);
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  color: var(--clr-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+@media (max-width: 600px) {
+  .template-grid {
+    grid-template-columns: 1fr;
+  }
+}

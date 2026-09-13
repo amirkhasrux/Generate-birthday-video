@@ -8,8 +8,6 @@
  * Receives the current progress percentage (0–100) from the parent.
  */
 
-import { useEffect, useState } from "react";
-
 interface LoadingScreenProps {
   progress: number;   // 0–100
   name: string;       // Person's name, shown in the loading message
@@ -27,16 +25,11 @@ const STATUS_STEPS = [
 ];
 
 export default function LoadingScreen({ progress, name }: LoadingScreenProps) {
-  const [displayedStep, setDisplayedStep] = useState(0);
-
-  // Find which status step to show based on progress
-  useEffect(() => {
-    let step = 0;
-    STATUS_STEPS.forEach((s, i) => {
-      if (progress >= s.threshold) step = i;
-    });
-    setDisplayedStep(step);
-  }, [progress]);
+  // Find which status step to show based on current progress
+  let displayedStep = 0;
+  STATUS_STEPS.forEach((s, i) => {
+    if (progress >= s.threshold) displayedStep = i;
+  });
 
   const current = STATUS_STEPS[displayedStep];
 

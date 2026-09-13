@@ -3,17 +3,18 @@
 /**
  * components/BirthdayForm.tsx
  * ----------------------------
- * Handles user input: name + date of birth.
+ * Handles user input: name + date of birth (HTML5 date picker) + animation template.
  * Performs client-side validation before calling onSubmit.
- * Does not know anything about video generation — it just collects data.
  */
 
 import { useState } from "react";
 import { validateName, validateDob } from "@/lib/birthday";
+import { AnimationTemplateId } from "@/lib/templates";
+import TemplateSelector from "./TemplateSelector";
 
 interface BirthdayFormProps {
   /** Called when the form is valid and user clicks submit */
-  onSubmit: (name: string, dob: string) => void;
+  onSubmit: (name: string, dob: string, templateId: AnimationTemplateId) => void;
   /** When true, the submit button is disabled (video is generating) */
   isGenerating: boolean;
 }
@@ -21,6 +22,7 @@ interface BirthdayFormProps {
 export default function BirthdayForm({ onSubmit, isGenerating }: BirthdayFormProps) {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState<AnimationTemplateId>("cosmic");
   const [nameError, setNameError] = useState("");
   const [dobError, setDobError] = useState("");
 
@@ -39,8 +41,8 @@ export default function BirthdayForm({ onSubmit, isGenerating }: BirthdayFormPro
 
     if (!nameResult.valid || !dobResult.valid) return;
 
-    // Pass trimmed name and raw dob string to parent
-    onSubmit(name.trim(), dob);
+    // Pass trimmed name, dob, and selected template
+    onSubmit(name.trim(), dob, selectedTemplate);
   }
 
   return (
@@ -93,6 +95,13 @@ export default function BirthdayForm({ onSubmit, isGenerating }: BirthdayFormPro
           </p>
         )}
       </div>
+
+      {/* ── Animation Template Selector ──────────────────────────── */}
+      <TemplateSelector
+        selectedId={selectedTemplate}
+        onSelect={setSelectedTemplate}
+        disabled={isGenerating}
+      />
 
       <button
         id="create-video-btn"
